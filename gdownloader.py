@@ -45,17 +45,19 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Scrape Google images')
     parser.add_argument('-d', '--directory', default='/home/user/Downloads/', type=str, help='save directory')
     parser.add_argument('-f', '--file', default='./file_to_download.csv', type=str, help='file to read')
+    parser.add_argument('-n', '--maxnum', default=3, type=int, help='number of file to download')
     argv = parser.parse_args()
 
     save_directory = argv.directory
     file = argv.file
+    n = argv.maxnum
     df = pd.read_csv(file)
     print(f"num of rows ==>  {len(df)}")
     for index, row in df.iterrows():
         name_to_save = row['name']
         query = row['query']
         try:
-            main(query, 1, save_directory, name_to_save)
+            main(query, n, save_directory, name_to_save)
         except KeyboardInterrupt:
             pass
         print(f"row {index + 1} from {len(df)} is complete")
